@@ -19,6 +19,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -107,7 +108,7 @@ public class Client {
 	 * @throws 	IOException
 	 */
 	public HttpResponse delete(String url, String format) throws ClientProtocolException, IOException {
-		request = new HttpGet(BASE_URL + url);
+		request = new HttpDelete(BASE_URL + url);
 		signMessage();
 		assignFormat(format);
 		return client.execute(request);
