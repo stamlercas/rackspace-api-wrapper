@@ -133,24 +133,16 @@ public class Client {
 	private void signMessage() {
 		String ua = "Rackspace Management Interface";
 		String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		
 		// X-Api-Signature is a sha1 hash of concatenation the user key, user-agent, timestamp, and the secret key.  It is in hexadecimal.
 		// It takes the sha1 in hex and converts to base64, which is what is needed.  Otherwise, will receive 403
 		BigInteger bigint = new BigInteger(DigestUtils.sha1Hex(this.apiKey + ua + timestamp + this.secretKey), 16);
-
 	    StringBuilder sb = new StringBuilder();
 	    byte[] ba = Base64.encodeInteger(bigint);
 	    for (byte b : ba) {
 	        sb.append((char)b);
 	    }
 	    String sha1 = sb.toString();
-	    // System.out.println("base64: " + sha1);
-	    // System.out.println("encoded: " + Base64.isBase64(sha1));
-
-		request.setHeader("User-Agent", ua);
-		
-		request.setHeader("X-Api-Signature", this.apiKey + ":" + 
-											timestamp + ":" + sha1);
+		request.setHeader("X-Api-Signature", this.apiKey + ":" + timestamp + ":" + sha1);
 	}
 	
 	/**
